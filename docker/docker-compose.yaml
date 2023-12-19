@@ -1,0 +1,14 @@
+version: '3.1'
+name: anthon
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: anthon
+      MONGO_INITDB_ROOT_PASSWORD: anthon
+    volumes:
+      - ./volumes/data/db:/data/db
+    ports:
+      - 27017:27017
