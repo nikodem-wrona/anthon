@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - master
-
+    paths:
+      - 'services/whisper-api/**'
+      - '.github/workflows/build-whisper-api-image.yml'
 jobs:
   build:
     runs-on: ubuntu-latest

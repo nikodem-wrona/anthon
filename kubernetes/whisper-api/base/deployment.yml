@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+namespace: anthon-prod
+metadata:
+  name: whisper-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: whisper-api
+  template:
+    metadata:
+      labels:
+        app: whisper-api
+    spec:
+      containers:
+      - name: whisper-api
+        image: ghcr.io/nikodem-wrona/anthon/whisper-api:latest
+        ports:
+        - containerPort: 3001
