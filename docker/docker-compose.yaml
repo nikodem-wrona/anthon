@@ -1,14 +1,18 @@
-version: '3.1'
+version: '3.8'
 name: anthon
 services:
   mongodb:
     container_name: mongodb
-    image: mongo
+    image: bitnami/mongodb:latest
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: anthon
-      MONGO_INITDB_ROOT_PASSWORD: anthon
+      - MONGODB_ADVERTISED_HOSTNAME=127.0.0.1
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_USER=anthon
+      - MONGODB_ROOT_PASSWORD=anthon
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
     volumes:
       - ./volumes/data/db:/data/db
     ports:
-      - 27017:27017
+      - '27017:27017'
+    platform: linux/amd64

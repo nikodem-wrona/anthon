@@ -1,0 +1,20 @@
+type User {
+  email: String!
+}
+
+input CreateUserInput {
+  email: String!
+}
+
+input CreateApiKey {
+  userId: String!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): Boolean!
+  createApiKey(input: CreateApiKey!): String!
+}
+
+type Query {
+  users: [User!]!
+}
