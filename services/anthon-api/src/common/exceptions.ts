@@ -3,3 +3,9 @@ export class InternalError extends Error {
     super('Internal error');
   }
 }
+
+export class UserUnauthorized extends Error {
+  constructor() {
+    super('User unauthorized');
+  }
+}

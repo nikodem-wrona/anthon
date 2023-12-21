@@ -12,7 +12,7 @@ export interface CreateUserInput {
     email: string;
 }
 
-export interface CreateApiKey {
+export interface CreateApiKeyInput {
     userId: string;
 }
 
@@ -22,7 +22,7 @@ export interface User {
 
 export interface IMutation {
     createUser(input: CreateUserInput): boolean | Promise<boolean>;
-    createApiKey(input: CreateApiKey): string | Promise<string>;
+    createApiKey(input: CreateApiKeyInput): string | Promise<string>;
 }
 
 export interface IQuery {

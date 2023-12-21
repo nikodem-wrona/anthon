@@ -14,6 +14,11 @@ import { UsersModule } from './users/users.module';
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
       },
+      context: (request) => {
+        return {
+          headers: request.req.headers,
+        };
+      },
     }),
     UsersModule,
   ],

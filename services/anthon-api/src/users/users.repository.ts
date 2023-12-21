@@ -102,6 +102,30 @@ export class UsersRepository {
     return user;
   }
 
+  public async GetUserByApiKey(key: string): Promise<User | undefined> {
+    const apiKey = await this.databaseClient.apiKey.findUnique({
+      where: {
+        key,
+      },
+    });
+
+    console.log({
+      apiKey,
+    });
+
+    if (!apiKey) {
+      return undefined;
+    }
+
+    const { userId } = apiKey;
+
+    return this.databaseClient.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
   public async CreateApiKeyForUser(
     payload: CreateApiKeyPayload,
   ): Promise<void> {

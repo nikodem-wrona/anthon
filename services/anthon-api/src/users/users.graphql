@@ -6,13 +6,13 @@ input CreateUserInput {
   email: String!
 }
 
-input CreateApiKey {
+input CreateApiKeyInput {
   userId: String!
 }
 
 type Mutation {
   createUser(input: CreateUserInput!): Boolean!
-  createApiKey(input: CreateApiKey!): String!
+  createApiKey(input: CreateApiKeyInput!): String!
 }
 
 type Query {

@@ -54,7 +54,7 @@ export class CreateApiKeyCommandHandler
       throw new UserIsNotAuthorizedToCreateApiKey();
     }
 
-    const key = `key-${this.GenerateApiKey()}`;
+    const key = this.GenerateApiKey();
 
     try {
       await this.usersRepository.CreateApiKeyForUser({

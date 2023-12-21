@@ -20,10 +20,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   email     String   @unique
-  apiKeys   ApiKey[]
   role      Role     @default(USER)
-
-  transactions Transaction[]
 
   @@map("users")
 }
@@ -33,7 +30,6 @@ model ApiKey {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   key       String   @unique
-  user      User     @relation(fields: [userId], references: [id])
   userId    String   @db.ObjectId
 
   @@map("apiKeys")
@@ -43,7 +39,6 @@ model Transaction {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
   userId    String   @db.ObjectId
   amount    Float
   currency  String

@@ -29,6 +29,11 @@ export class UsersService {
     dto: CreateApiKeyDto,
   ): Promise<void> {
     const { userId } = dto;
+    console.log({
+      creatorId,
+      userId,
+    });
+
     const command = new CreateApiKeyCommand(userId, creatorId);
     await this.commandBus.execute(command);
   }
