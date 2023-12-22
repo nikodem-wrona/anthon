@@ -1,18 +1,32 @@
 version: '3.8'
 name: anthon
 services:
-  mongodb:
-    container_name: mongodb
+  anthon-mongodb:
+    container_name: anthon-mongodb
     image: bitnami/mongodb:latest
     restart: always
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=127.0.0.1
-      - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_ROOT_USER=anthon
       - MONGODB_ROOT_PASSWORD=anthon
+      #- MONGODB_ADVERTISED_HOSTNAME=anthon-mongodb # if you are using docker compose to run antohon-api
+      - MONGODB_ADVERTISED_HOSTNAME=127.0.0.1 # if you are running antohon-api locally
+      - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
     volumes:
       - ./volumes/data/db:/data/db
     ports:
       - '27017:27017'
     platform: linux/amd64
+  anthon-api:
+    container_name: anthon-api
+    build:
+      context: ../services/anthon-api
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - DATABASE_URL=mongodb://anthon:anthon@anthon-mongodb:27017/anthon?authSource=admin
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    depends_on:
+      - anthon-mongodb
