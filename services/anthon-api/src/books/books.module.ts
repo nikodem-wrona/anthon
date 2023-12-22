@@ -3,21 +3,24 @@ import { CqrsModule } from '@nestjs/cqrs';
 
 import { DatabaseModule } from 'src/database';
 
-import { UsersRepository } from './users.repository';
+import { BooksRepository } from './books.repository';
+import { BooksResolver } from './books.resolver';
+import { BooksService } from './books.service';
+
 import { CommandHandlers } from './command-handlers';
-import { UsersResolver } from './users.resolver';
-import { UsersService } from './users.service';
+import { QueryHandlers } from './query-handlers';
 import { AuthRepository } from 'src/common/auth.repository';
 
 @Module({
   imports: [CqrsModule, DatabaseModule],
   controllers: [],
   providers: [
-    UsersRepository,
+    BooksRepository,
     AuthRepository,
-    UsersResolver,
-    UsersService,
+    BooksResolver,
+    BooksService,
     ...CommandHandlers,
+    ...QueryHandlers,
   ],
 })
-export class UsersModule {}
+export class BooksModule {}

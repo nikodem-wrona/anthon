@@ -1,4 +1,4 @@
-import { UserRole } from './models';
+import { UserRole } from 'src/common/types';
 
 export class CreateUserDto {
   email: string;

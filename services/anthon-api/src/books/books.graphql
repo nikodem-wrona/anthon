@@ -1,0 +1,21 @@
+type Book {
+  id: ID!
+  title: String!
+  author: String!
+  isFinished: Boolean!
+  userId: String!
+}
+
+input CreateBookInput {
+  title: String!
+  author: String!
+  isFinished: Boolean!
+}
+
+type Mutation {
+  createBook(input: CreateBookInput!): Boolean!
+}
+
+type Query {
+  getBooksForUser: [Book]!
+}

@@ -1,1 +1,1 @@
-export { User, UserRole } from './User.model';
+export { User } from './User.model';

@@ -6,4 +6,4 @@ class User {
   role: DBRole;
 }
 
-export { User, DBRole as UserRole };
+export { User };

@@ -2,10 +2,10 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
-import { UsersRepository } from 'src/users/users.repository';
 import { User } from 'src/users/models';
 
 import { UserUnauthorized } from './exceptions';
+import { AuthRepository } from './auth.repository';
 
 export type CustomContext = ExecutionContext & {
   user: User;
@@ -13,7 +13,7 @@ export type CustomContext = ExecutionContext & {
 
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(private readonly authRepository: AuthRepository) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const gqlContext: CustomContext =
@@ -31,7 +31,7 @@ export class ApiKeyGuard implements CanActivate {
       throw new UserUnauthorized();
     }
 
-    const user = await this.usersRepository.GetUserByApiKey(key);
+    const user = await this.authRepository.GetUserByApiKey(key);
 
     if (!user) {
       throw new UserUnauthorized();

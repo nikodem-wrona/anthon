@@ -3,11 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseClient } from 'src/database/database.client';
 
 import { User } from './models';
-import { UserRole } from './models/User.model';
 import {
   UserWithGivenApiKeyNotFound,
   UserWithGivenIdNotFound,
 } from './exceptions';
+import { UserRole } from 'src/common/types';
 
 export type CreateUserPayload = {
   email: string;
@@ -100,30 +100,6 @@ export class UsersRepository {
     }
 
     return user;
-  }
-
-  public async GetUserByApiKey(key: string): Promise<User | undefined> {
-    const apiKey = await this.databaseClient.apiKey.findUnique({
-      where: {
-        key,
-      },
-    });
-
-    console.log({
-      apiKey,
-    });
-
-    if (!apiKey) {
-      return undefined;
-    }
-
-    const { userId } = apiKey;
-
-    return this.databaseClient.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
   }
 
   public async CreateApiKeyForUser(

@@ -1,15 +1,16 @@
 import { CanActivate, ExecutionContext, mixin } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
-import { User, UserRole } from 'src/users/models';
+import { User } from 'src/users/models';
 
 import { UserUnauthorized } from './exceptions';
+import { UserRole } from './types';
 
 export type CustomContext = ExecutionContext & {
   user: User;
 };
 
-export function UserRoleGuard(role?: UserRole) {
+export function UserRoleGuard(roles?: UserRole[]) {
   class Guard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const gqlContext: CustomContext =
@@ -21,7 +22,7 @@ export function UserRoleGuard(role?: UserRole) {
         throw new UserUnauthorized();
       }
 
-      if (role == user.role) {
+      if (roles.includes(user.role)) {
         return true;
       } else {
         throw new UserUnauthorized();
