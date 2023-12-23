@@ -32,6 +32,7 @@ export interface Book {
 
 export interface IMutation {
     createBook(input: CreateBookInput): boolean | Promise<boolean>;
+    deleteBook(bookId: string): boolean | Promise<boolean>;
     createUser(input: CreateUserInput): boolean | Promise<boolean>;
     createApiKey(input: CreateApiKeyInput): string | Promise<string>;
 }

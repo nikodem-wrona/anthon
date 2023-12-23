@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
-import { CreateBookCommand } from './commands';
+import { CreateBookCommand, DeleteBookCommand } from './commands';
 import { Book } from './models';
 import { GetBooksForUserQuery } from './queries';
 
@@ -10,6 +10,11 @@ type CreateBookPayload = {
   author: string;
   userId: string;
   isFinished: boolean;
+};
+
+type DeleteBookPayload = {
+  bookId: string;
+  userId: string;
 };
 
 type GetBooksForUserPayload = {
@@ -26,6 +31,12 @@ export class BooksService {
   public async CreateBook(payload: CreateBookPayload): Promise<void> {
     const { title, author, userId, isFinished } = payload;
     const command = new CreateBookCommand(title, author, userId, isFinished);
+    await this.commandBus.execute(command);
+  }
+
+  public async DeleteBook(payload: DeleteBookPayload): Promise<void> {
+    const { bookId, userId } = payload;
+    const command = new DeleteBookCommand(bookId, userId);
     await this.commandBus.execute(command);
   }
 

@@ -14,10 +14,34 @@ export type CreateBookPayload = {
 export class BooksRepository {
   constructor(private databaseClient: DatabaseClient) {}
 
+  public async GetBookById(bookId: string): Promise<Book | undefined> {
+    return this.databaseClient.book.findUnique({
+      where: {
+        id: bookId,
+      },
+    });
+  }
+
+  public async GetBooksByUserId(userId: string): Promise<Book[]> {
+    return this.databaseClient.book.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
   public async GetBookByTitle(title: string): Promise<Book | undefined> {
     return this.databaseClient.book.findUnique({
       where: {
         title,
+      },
+    });
+  }
+
+  public async DeleteBookById(bookId: string): Promise<void> {
+    await this.databaseClient.book.delete({
+      where: {
+        id: bookId,
       },
     });
   }
@@ -31,14 +55,6 @@ export class BooksRepository {
         author,
         userId,
         isFinished,
-      },
-    });
-  }
-
-  public async GetBooksByUserId(userId: string): Promise<Book[]> {
-    return this.databaseClient.book.findMany({
-      where: {
-        userId,
       },
     });
   }

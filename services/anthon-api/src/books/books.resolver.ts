@@ -28,6 +28,22 @@ export class BooksResolver {
       isFinished,
       userId: user.id,
     });
+
+    return true;
+  }
+
+  @UseGuards(ApiKeyGuard, UserRoleGuard([UserRole.ADMIN, UserRole.USER]))
+  @Mutation('deleteBook')
+  async deleteBook(
+    @Args('bookId') bookId: string,
+    @Context() request: CustomContext,
+  ): Promise<boolean> {
+    const { user } = request;
+    await this.booksService.DeleteBook({
+      bookId,
+      userId: user.id,
+    });
+
     return true;
   }
 

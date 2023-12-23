@@ -33,6 +33,8 @@ export class Book {
 export abstract class IMutation {
     abstract createBook(input: CreateBookInput): boolean | Promise<boolean>;
 
+    abstract deleteBook(bookId: string): boolean | Promise<boolean>;
+
     abstract createUser(input: CreateUserInput): boolean | Promise<boolean>;
 
     abstract createApiKey(input: CreateApiKeyInput): string | Promise<string>;
