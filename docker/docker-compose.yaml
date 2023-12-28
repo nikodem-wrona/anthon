@@ -24,3 +24,11 @@ services:
       - '3000:3000'
     depends_on:
       - anthon-postgres
+  whisper-api:
+    container_name: whisper-api
+    build:
+      context: ../services/whisper-api
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '3001:3001'
