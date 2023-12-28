@@ -1,0 +1,5 @@
+wavio==0.0.8
+scipy==1.11.4
+sounddevice==0.4.6
+pydub==0.25.1
+requests==2.31.0
