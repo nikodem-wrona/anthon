@@ -1,3 +1,0 @@
-Title 1, Author, true
-Title 2, Author, true
-Title 3, Author, true

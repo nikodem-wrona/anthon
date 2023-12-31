@@ -10,20 +10,18 @@ def save_file(file):
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
-    if 'audio' not in request.files:
-        return jsonify({"error": "No audio file part in the request"}), 400
+    audio_data = request.get_data()
     
-    file = request.files['audio']
-        
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
+    if not audio_data:
+        return jsonify({"error": "No audio data in the request"}), 400
 
-    save_file(file)
+    with open("./data/audio.mp3", "wb") as audio_file:
+        audio_file.write(audio_data)
 
     result = model.transcribe("./data/audio.mp3")
     text = result['text'].strip()
 
     return jsonify({ "text": text })
-    
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3001, debug=False)
