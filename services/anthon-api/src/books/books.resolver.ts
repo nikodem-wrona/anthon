@@ -1,7 +1,10 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 
-import { ApiKeyGuard, CustomContext } from 'src/common/api-key.guard';
+import {
+  GraphqlApiKeyGuard,
+  CustomContext,
+} from 'src/common/graphql-api-key.guard';
 
 import { CreateBookDto } from './dto';
 import { UserRoleGuard } from 'src/common/role.guard';
@@ -13,7 +16,7 @@ import { UserRole } from 'src/common/types';
 export class BooksResolver {
   constructor(private readonly booksService: BooksService) {}
 
-  @UseGuards(ApiKeyGuard, UserRoleGuard([UserRole.ADMIN, UserRole.USER]))
+  @UseGuards(GraphqlApiKeyGuard, UserRoleGuard([UserRole.ADMIN, UserRole.USER]))
   @Mutation('createBook')
   async createBook(
     @Args('input') input: CreateBookDto,
@@ -32,7 +35,7 @@ export class BooksResolver {
     return true;
   }
 
-  @UseGuards(ApiKeyGuard, UserRoleGuard([UserRole.ADMIN, UserRole.USER]))
+  @UseGuards(GraphqlApiKeyGuard, UserRoleGuard([UserRole.ADMIN, UserRole.USER]))
   @Mutation('deleteBook')
   async deleteBook(
     @Args('bookId') bookId: string,
@@ -47,7 +50,7 @@ export class BooksResolver {
     return true;
   }
 
-  @UseGuards(ApiKeyGuard, UserRoleGuard([UserRole.ADMIN, UserRole.USER]))
+  @UseGuards(GraphqlApiKeyGuard, UserRoleGuard([UserRole.ADMIN, UserRole.USER]))
   @Query('getBooksForUser')
   async createApiKey(@Context() request: CustomContext): Promise<Book[]> {
     const { user } = request;

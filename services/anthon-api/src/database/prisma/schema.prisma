@@ -15,14 +15,20 @@ enum Role {
   USER
 }
 
+enum SubscriptionDuration {
+  MONTHLY
+  YEARLY
+}
+
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  role      Role     @default(USER)
-  apiKeys   ApiKey[]
-  books     Book[]
+  id            String         @id @default(uuid()) @db.Uuid
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  email         String         @unique
+  role          Role           @default(USER)
+  apiKeys       ApiKey[]
+  books         Book[]
+  subscriptions Subscription[]
 
   @@map("users")
 }
@@ -49,4 +55,30 @@ model Book {
   isFinished Boolean  @default(false)
 
   @@map("books")
+}
+
+model Subscription {
+  id                       String                    @id @default(uuid()) @db.Uuid
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  name                     String                    @unique
+  type                     SubscriptionDuration
+  subscriptionTransactions SubscriptionTransaction[]
+  userId                   String                    @db.Uuid
+  user                     User                      @relation(fields: [userId], references: [id])
+
+  @@map("subscriptions")
+}
+
+model SubscriptionTransaction {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptionId String       @db.Uuid
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  amount         Int
+  currency       String
+
+  @@map("subscriptionTransactions")
 }

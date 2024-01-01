@@ -1,7 +1,10 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 
-import { ApiKeyGuard, CustomContext } from 'src/common/api-key.guard';
+import {
+  GraphqlApiKeyGuard,
+  CustomContext,
+} from 'src/common/graphql-api-key.guard';
 
 import { UsersService } from './users.service';
 import { CreateApiKeyDto, CreateUserDto } from './dto';
@@ -12,7 +15,7 @@ import { UserRole } from 'src/common/types';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(ApiKeyGuard, UserRoleGuard([UserRole.ADMIN]))
+  @UseGuards(GraphqlApiKeyGuard, UserRoleGuard([UserRole.ADMIN]))
   @Mutation('createUser')
   async createUser(@Args('input') input: CreateUserDto): Promise<boolean> {
     const { email } = input;
@@ -22,7 +25,7 @@ export class UsersResolver {
     return true;
   }
 
-  @UseGuards(ApiKeyGuard, UserRoleGuard([UserRole.ADMIN]))
+  @UseGuards(GraphqlApiKeyGuard, UserRoleGuard([UserRole.ADMIN]))
   @Mutation('createApiKey')
   async createApiKey(
     @Args('input') input: CreateApiKeyDto,

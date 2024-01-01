@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: whisper-api-service
+  namespace: anthon-prod
 spec:
   type: ClusterIP
   ports:

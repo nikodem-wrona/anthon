@@ -12,7 +12,7 @@ export type CustomContext = ExecutionContext & {
 };
 
 @Injectable()
-export class ApiKeyGuard implements CanActivate {
+export class GraphqlApiKeyGuard implements CanActivate {
   constructor(private readonly authRepository: AuthRepository) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

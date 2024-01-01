@@ -1,0 +1,42 @@
+enum SubscriptionDuration {
+  MONTHLY
+  YEARLY
+}
+
+type SubscriptionTransaction {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+  amount: Float!
+  currency: String!
+}
+
+type UserSubscription {
+  id: ID!
+  name: String!
+  type: SubscriptionDuration!
+  subscriptionTransactions: [SubscriptionTransaction]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateSubscriptionInput {
+  name: String!
+  type: SubscriptionDuration!
+}
+
+input AddSubscriptionTransactionInput {
+  subscriptionId: ID!
+  amount: Float!
+  currency: String!
+}
+
+type Mutation {
+  createSubscription(input: CreateSubscriptionInput!): Boolean!
+  deleteSubscription(subscriptionId: ID!): Boolean!
+  addSubscriptionTransaction(input: AddSubscriptionTransactionInput!): Boolean!
+}
+
+type Query {
+  getUserSubscriptions: [UserSubscription]!
+}

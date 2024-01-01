@@ -1,1 +1,1 @@
-export { Book } from './Book.model';
+export * from './Book.model';

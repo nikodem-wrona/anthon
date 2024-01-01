@@ -1,10 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
-namespace: anthon-prod
 metadata:
   name: whisper-api
+  namespace: anthon-prod
+
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: whisper-api

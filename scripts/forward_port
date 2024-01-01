@@ -1,0 +1,43 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <service>"
+    exit 1
+fi
+
+service=$1
+
+function forward_postgres_port() {
+    kubectl port-forward svc/anthon-postgres-service 5432:5432
+}
+
+function forward_mongodb_port() {
+    kubectl port-forward svc/anthon-mongodb-service 27017:27017
+}
+
+function forward_anthon_api_port() {
+    kubectl port-forward svc/anthon-api-service 3000:3000
+}
+
+function forward_whisper_api_port() {
+    kubectl port-forward svc/anthon-whisper-service 3001:3001
+}
+
+function forward_grafana_port() {
+    kubectl port-forward svc/grafana 5001:3000 --namespace metrics
+}
+
+if [ "$service" == "postgres" ]; then
+    forward_postgres_port
+elif [ "$service" == "mongodb" ]; then
+    forward_mongodb_port
+elif [ "$service" == "anthon-api" ]; then
+    forward_anthon_api_port
+elif [ "$service" == "whisper-api" ]; then
+    forward_whisper_api_port
+elif [ "$service" == "grafana" ]; then
+    forward_grafana_port
+else
+    echo "Unknown service: $service"
+    exit 1
+fi

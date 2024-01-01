@@ -7,6 +7,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { UsersModule } from './users';
 import { BooksModule } from './books';
+import { AiModule } from './ai';
+import { MoneyModule } from './money';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { BooksModule } from './books';
     }),
     UsersModule,
     BooksModule,
+    MoneyModule,
+    AiModule,
   ],
   controllers: [],
 })
