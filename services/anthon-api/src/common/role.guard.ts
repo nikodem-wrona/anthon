@@ -12,11 +12,15 @@ export type CustomContext = ExecutionContext & {
 
 export function UserRoleGuard(roles?: UserRole[]) {
   class Guard implements CanActivate {
-    async canActivate(context: ExecutionContext): Promise<boolean> {
+    async canActivate(context: CustomContext): Promise<boolean> {
       const gqlContext: CustomContext =
         GqlExecutionContext.create(context).getContext();
 
-      const user = gqlContext.user;
+      let user = gqlContext.user;
+
+      if (!user) {
+        user = context.user;
+      }
 
       if (!user) {
         throw new UserUnauthorized();

@@ -4,6 +4,7 @@ import { DatabaseClient } from 'src/database/database.client';
 
 import { UserRole } from 'src/common/types';
 import { User } from 'src/users/models';
+import { UserUnauthorized } from './exceptions';
 
 export type CreateUserPayload = {
   email: string;
@@ -32,7 +33,7 @@ export class AuthRepository {
     });
 
     if (!apiKey) {
-      return undefined;
+      throw new UserUnauthorized();
     }
 
     const { userId } = apiKey;

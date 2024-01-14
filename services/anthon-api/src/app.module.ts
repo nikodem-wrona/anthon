@@ -9,6 +9,7 @@ import { UsersModule } from './users';
 import { BooksModule } from './books';
 import { AiModule } from './ai';
 import { MoneyModule } from './money';
+import { KafkaModule } from './common/kafka';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { MoneyModule } from './money';
         };
       },
     }),
+    KafkaModule,
     UsersModule,
     BooksModule,
     MoneyModule,
